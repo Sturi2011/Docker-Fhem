@@ -1,0 +1,21 @@
+FROM debian:jessie
+
+MAINTAINER afohl <andreas@fohl.net>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
+RUN apt-get -y --force-yes install wget apt-transport-https
+
+RUN apt-get -f install
+RUN apt-get install perl libdevice-serialport-perl libio-socket-ssl-perl libwww-perl libxml-simple-perl wget libjson-perl sqlite3 libdbd-sqlite3-perl libtext-diff-perl libnet-telnet-perl libcrypt-rijndael-perl libdatetime-format-strptime-perl librpc-xml-perl etherwake libsoap-lite-perl libxml-parser-lite-perl mc cups-client -y
+
+RUN echo Europe/Berlin > /etc/timezone && dpkg-reconfigure tzdata
+RUN wget http://fhem.de/fhem-5.8.deb
+RUN dpkg -i fhem-5.8.deb
+
+EXPOSE 8083 8084 8085 7411 7420 2001 2010 67 6767
+
+
+
+
